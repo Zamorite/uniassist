@@ -1,4 +1,4 @@
-package com.example.uniassist
+package com.zamorite.uniassist
 
 import io.flutter.embedding.android.FlutterActivity
 
