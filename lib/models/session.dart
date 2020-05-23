@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Session {
   final String id, taskId, ownerId;
   final Duration duration;
@@ -8,4 +10,15 @@ class Session {
     this.ownerId,
     this.duration,
   });
+
+  factory Session.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data;
+
+    return Session(
+      id: doc.documentID ?? '<null>',
+      taskId: data['taskId'] ?? '<null>',
+      ownerId: data['ownerId'] ?? '<null>',
+      duration: data['duration'] ?? '<null>',
+    );
+  }
 }
