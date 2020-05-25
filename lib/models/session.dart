@@ -21,4 +21,13 @@ class Session {
       duration: data['duration'] ?? '<null>',
     );
   }
+
+  Map toJSON() {
+    return {
+      id: this.id ?? null,
+      taskId: taskId ?? null,
+      ownerId: ownerId ?? null,
+      duration: duration ?? null,
+    };
+  }
 }

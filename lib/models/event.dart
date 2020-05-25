@@ -23,4 +23,14 @@ class Event {
       period: data['period'] ?? '<null>',
     );
   }
+
+  Map toJSON() {
+    return {
+      id: this.id ?? null,
+      ownerId: this.ownerId ?? null,
+      noteId: this.noteId ?? null,
+      type: this.type ?? null,
+      period: this.period ?? null,
+    };
+  }
 }

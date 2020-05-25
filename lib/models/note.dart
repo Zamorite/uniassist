@@ -23,4 +23,14 @@ class Note {
       period: data['period'] ?? '<null>',
     );
   }
+
+  Map toJSON() {
+    return {
+      id: this.id ?? null,
+      content: this.content ?? null,
+      ownerId: this.ownerId ?? null,
+      type: this.type ?? null,
+      period: this.period ?? null,
+    };
+  }
 }

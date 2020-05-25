@@ -25,4 +25,15 @@ class Task {
       status: data['status'] ?? '<null>',
     );
   }
+
+  Map toJSON() {
+    return {
+      id: this.id ?? null,
+      content: this.content ?? null,
+      ownerId: this.ownerId ?? null,
+      type: this.type ?? null,
+      deadline: this.deadline ?? null,
+      status: this.status ?? null,
+    };
+  }
 }
