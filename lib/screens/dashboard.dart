@@ -15,18 +15,24 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              loggedIn
-                  ? '😎 Logged in as ${user.displayName}'
-                  : '⚠ Not Logged in',
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                loggedIn
+                    ? '😎 Logged in as ${user.displayName}'
+                    : '⚠ Not Logged in',
+              ),
             ),
             MaterialButton(
+              color: loggedIn ? Colors.red : Colors.green,
               child: Text(
                 loggedIn ? 'Log out' : 'Log in',
               ),
-              onPressed:
-                  loggedIn ? authService.signout() : authService.googleSignIn(),
+              onPressed: () {
+                loggedIn ? authService.signout() : authService.googleSignIn();
+              },
             ),
           ],
         ),

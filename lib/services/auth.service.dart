@@ -28,7 +28,21 @@ class AuthService {
   //***** Google Social Authentication
   Future<FirebaseUser> googleSignIn() async {
     loading.add(true);
-    GoogleSignInAccount googleUser = await _gsi.signIn();
+
+    GoogleSignInAccount
+        googleUser; // Declare googleUser to allow for visibility
+
+    googleUser = await _gsi.signIn().catchError(
+      (dynamic _) {
+        print(
+            '\n/ ***** Looks like the user closed the auth overlay 🤔\n[--] ${_.toString()}\n\n');
+        return null;
+      },
+    );
+
+    // Prevent further exceptions in case of PlatformException (when user cancels the sign-in process)
+    if (googleUser == null) return null;
+
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     AuthCredential credential = GoogleAuthProvider.getCredential(
       idToken: googleAuth.idToken,
@@ -48,7 +62,7 @@ class AuthService {
 
   //***** Updating User data from Social Account
   void updateUserData(FirebaseUser user) async {
-    DocumentReference ref = _store.collection('users').document('uid');
+    DocumentReference ref = _store.collection('users').document(user.uid);
 
     ref.setData(
       {
