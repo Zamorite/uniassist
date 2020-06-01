@@ -9,6 +9,8 @@
 .history
 .svn/
 **/android/app/google-services.json
+**/launch.json
+**/pubspec.lock
 
 # IntelliJ related
 *.iml
