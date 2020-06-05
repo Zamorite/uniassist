@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uniassist/services/auth.service.dart';
 import 'package:uniassist/services/event.service.dart';
@@ -14,4 +15,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => NoteService());
   locator.registerLazySingleton(() => SessionService());
   locator.registerLazySingleton(() => TaskService());
+  locator.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
 }

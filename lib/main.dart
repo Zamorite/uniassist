@@ -33,3 +33,6 @@ class UniAssist extends StatelessWidget {
     );
   }
 }
+
+// TODO: Add the following to proguard
+// -keep class com.dexterous.** { *; }
