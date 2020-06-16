@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:uniassist/screens/dashboard.dart';
+import 'package:uniassist/screens/sandbox.dart';
+import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
+import 'package:uniassist/utils/theme.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -20,16 +23,33 @@ class UniAssist extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
-            value: FirebaseAuth.instance.onAuthStateChanged)
+            value: FirebaseAuth.instance.onAuthStateChanged),
+            ChangeNotifierProvider<ThemeChanger>(create: (_) => ThemeChanger(kDarkTheme,),),
       ],
-      child: MaterialApp(
-        title: 'UniAssist',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Dashboard(),
-      ),
+      child: ThemedMaterialApp(),
+    );
+  }
+}
+
+class ThemedMaterialApp extends StatelessWidget {
+  const ThemedMaterialApp({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final theme = Provider.of<ThemeChanger>(context);
+
+    return MaterialApp(
+      title: 'UniAssist',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   visualDensity: VisualDensity.adaptivePlatformDensity,
+      // ),
+      theme: theme.getTheme(),
+      // home: Dashboard(),
+      home: SandBox(),
     );
   }
 }
