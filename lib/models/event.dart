@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
-  final String id, noteId, ownerId, type;
-  final DateTime period;
+  final String id;
+  String type, noteId, ownerId;
+  DateTime period;
 
   Event({
     this.id,

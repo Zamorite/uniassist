@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Session {
-  final String id, taskId, ownerId;
-  final Duration duration;
+  final String id;
+  String taskId, ownerId;
+  Duration duration;
 
   Session({
     this.id,

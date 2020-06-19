@@ -4,6 +4,7 @@ import 'package:uniassist/services/auth.service.dart';
 import 'package:uniassist/services/event.service.dart';
 import 'package:uniassist/services/note.service.dart';
 import 'package:uniassist/services/session.service.dart';
+import 'package:uniassist/services/settings.service.dart';
 import 'package:uniassist/services/task.service.dart';
 
 //***** Initialize GetIt for dependency injection
@@ -16,4 +17,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => SessionService());
   locator.registerLazySingleton(() => TaskService());
   locator.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
+  locator.registerLazySingleton(() => SettingsService());
 }

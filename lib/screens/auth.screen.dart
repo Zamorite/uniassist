@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uniassist/services/auth.service.dart';
 import 'package:uniassist/utils/service.locator.dart';
 
-class Dashboard extends StatelessWidget {
+class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<FirebaseUser>(context);

@@ -1,7 +1,7 @@
 class Info {
-  final bool success;
-  final String message;
-  final int code;
+  bool success;
+  String message;
+  int code;
 
   Info({
     this.success,

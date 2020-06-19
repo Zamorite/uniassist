@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Task {
-  final String id, content, ownerId, type, status;
-  final DateTime deadline;
+  final String id;
+  String content, ownerId, type, status;
+  DateTime deadline;
 
   Task({
     this.id,

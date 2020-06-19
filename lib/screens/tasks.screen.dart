@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:provider/provider.dart';
 import 'package:uniassist/models/task.dart';
+import 'package:uniassist/screens/new_task.screen.dart';
 import 'package:uniassist/utils/constants.dart';
-import 'package:uniassist/utils/theme.dart';
 import 'package:uniassist/widgets/default.scaffold.dart';
-import 'package:uniassist/widgets/setting.tile.dart';
 import 'package:uniassist/widgets/tasklist.tile.dart';
 
-class SandBox extends StatelessWidget {
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Task task = Task(
@@ -38,7 +36,7 @@ class SandBox extends StatelessWidget {
                   EdgeInsets.only(left: 0, right: kWidth(context) * .18),
               indicatorPadding:
                   EdgeInsets.only(left: 0, right: kWidth(context) * .18),
-              labelStyle: TextStyle(),
+              labelStyle: TextStyle(fontFamily: 'Teko', fontSize: 24),
               indicatorSize: TabBarIndicatorSize.label,
               tabs: [
                 Tab(
@@ -93,7 +91,7 @@ class SandBox extends StatelessWidget {
                               task: task,
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     Container(),
@@ -105,7 +103,17 @@ class SandBox extends StatelessWidget {
           ],
         ),
       ),
-      fab: FloatingActionButton(onPressed: null),
+      fab: FloatingActionButton(
+        child: Icon(
+          Feather.plus,
+          color: Colors.white,
+        ),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => NewTaskScreen(),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Note {
-  final String id, content, ownerId, type;
-  final DateTime period;
+  final String id;
+  String content, ownerId, type;
+  DateTime period;
 
   Note({
     this.id,

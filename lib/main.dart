@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:uniassist/screens/dashboard.dart';
-import 'package:uniassist/screens/sandbox.dart';
+import 'package:uniassist/screens/main.screen.dart';
+import 'package:uniassist/screens/tasks.screen.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
 import 'package:uniassist/utils/theme.dart';
@@ -24,7 +24,11 @@ class UniAssist extends StatelessWidget {
       providers: [
         StreamProvider<FirebaseUser>.value(
             value: FirebaseAuth.instance.onAuthStateChanged),
-            ChangeNotifierProvider<ThemeChanger>(create: (_) => ThemeChanger(kDarkTheme,),),
+        ChangeNotifierProvider<ThemeChanger>(
+          create: (_) => ThemeChanger(
+            kDarkTheme,
+          ),
+        ),
       ],
       child: ThemedMaterialApp(),
     );
@@ -38,7 +42,6 @@ class ThemedMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final theme = Provider.of<ThemeChanger>(context);
 
     return MaterialApp(
@@ -49,7 +52,9 @@ class ThemedMaterialApp extends StatelessWidget {
       // ),
       theme: theme.getTheme(),
       // home: Dashboard(),
-      home: SandBox(),
+      // home: SandBox(),
+      // home: TasksScreen(),
+      home: MainScreen(),
     );
   }
 }
