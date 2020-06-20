@@ -29,7 +29,10 @@ class DefaultScaffold extends StatelessWidget {
             Container(
               height: kHeight(context) * .12,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: kDarkGray))),
+                border: Border(
+                  bottom: BorderSide(color: kDarkGray),
+                ),
+              ),
               // border: Border(bottom: BorderSide(color: kLightGray))),
               padding: EdgeInsets.symmetric(
                 horizontal: kWidth(context) * .06,
@@ -48,7 +51,7 @@ class DefaultScaffold extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: kWidth(context) * .03,
-                        vertical: kHeight(context) * .03,
+                        // vertical: kHeight(context) * .03,
                       ),
                       child: Center(child: icon),
                     ),

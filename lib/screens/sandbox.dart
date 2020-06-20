@@ -12,12 +12,13 @@ class SandBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Task task = Task(
-        content: 'Write an article about Design Patterns',
-        id: '',
-        ownerId: '',
-        type: '',
-        deadline: DateTime.now(),
-        status: '');
+      content: 'Write an article about Design Patterns',
+      id: '',
+      ownerId: '',
+      type: '',
+      deadline: DateTime.now(),
+      // status: '');
+    );
 
     return DefaultScaffold(
       title: 'TASKS',

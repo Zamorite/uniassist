@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:uniassist/screens/auth.screen.dart';
 import 'package:uniassist/screens/main.screen.dart';
 import 'package:uniassist/screens/tasks.screen.dart';
 import 'package:uniassist/utils/constants.dart';
@@ -43,6 +44,7 @@ class ThemedMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
+    var user = Provider.of<FirebaseUser>(context);
 
     return MaterialApp(
       title: 'UniAssist',
@@ -54,7 +56,8 @@ class ThemedMaterialApp extends StatelessWidget {
       // home: Dashboard(),
       // home: SandBox(),
       // home: TasksScreen(),
-      home: MainScreen(),
+      // home: MainScreen(),
+      home: user == null ? AuthScreen() : MainScreen(),
     );
   }
 }

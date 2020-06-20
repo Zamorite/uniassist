@@ -31,11 +31,14 @@ class TaskService {
 
   //***** Get a list of a user's tasks asynchronously from Firebase
   Stream<List<Task>> streamTasks(FirebaseUser user) {
-    var ref = _fs.document(user.uid).collection('tasks');
+    print('User UID: ${user.uid}');
+    var ref = _fs.collection('tasks').where('ownerId', isEqualTo: user.uid);
     return ref.snapshots().map(
-          (list) => list.documents.map(
-            (snap) => Task.fromFirestore(snap),
-          ),
+          (list) => list.documents
+              .map(
+                (snap) => Task.fromFirestore(snap),
+              )
+              .toList(),
         );
   }
 

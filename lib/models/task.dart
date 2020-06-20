@@ -11,7 +11,7 @@ class Task {
     this.ownerId,
     this.type,
     this.deadline,
-    this.status,
+    // this.status,
   });
 
   factory Task.fromFirestore(DocumentSnapshot doc) {
@@ -22,19 +22,19 @@ class Task {
       content: data['content'] ?? '<null>',
       ownerId: data['ownerId'] ?? '<null>',
       type: data['type'] ?? '<null>',
-      deadline: data['deadline'] ?? '<null>',
-      status: data['status'] ?? '<null>',
+      deadline: (data['deadline']).toDate() ?? '<null>',
+      // status: data['status'] ?? '<null>',
     );
   }
 
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
-      id: this.id ?? null,
-      content: this.content ?? null,
-      ownerId: this.ownerId ?? null,
-      type: this.type ?? null,
-      deadline: this.deadline ?? null,
-      status: this.status ?? null,
+      'id': this.id ?? null,
+      'content': this.content ?? null,
+      'ownerId': this.ownerId ?? null,
+      'type': this.type ?? null,
+      'deadline': this.deadline ?? null,
+      // status: this.status ?? null,
     };
   }
 }

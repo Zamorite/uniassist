@@ -25,13 +25,13 @@ class Note {
     );
   }
 
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
-      id: this.id ?? null,
-      content: this.content ?? null,
-      ownerId: this.ownerId ?? null,
-      type: this.type ?? null,
-      period: this.period ?? null,
+      'id': this.id ?? null,
+      'content': this.content ?? null,
+      'ownerId': this.ownerId ?? null,
+      'type': this.type ?? null,
+      'period': this.period ?? null,
     };
   }
 }

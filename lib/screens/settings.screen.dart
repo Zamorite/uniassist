@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uniassist/services/auth.service.dart';
 import 'package:uniassist/services/settings.service.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
@@ -9,6 +10,7 @@ import 'package:uniassist/widgets/setting.tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsService settingService = locator.get<SettingsService>();
+  var authService = locator.get<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +50,17 @@ class SettingsScreen extends StatelessWidget {
                       settingService.toggleTheme(context, value),
                 ),
               ),
+              SettingTile(
+                title: 'Log Out',
+                onTap: () {
+                  authService.signout();
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+              ),
             ],
           )
         ],
       ),
-      fab: FloatingActionButton(onPressed: null),
     );
   }
 }

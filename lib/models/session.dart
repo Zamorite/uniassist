@@ -23,12 +23,12 @@ class Session {
     );
   }
 
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
-      id: this.id ?? null,
-      taskId: taskId ?? null,
-      ownerId: ownerId ?? null,
-      duration: duration ?? null,
+      'id': this.id ?? null,
+      'taskId': taskId ?? null,
+      'ownerId': ownerId ?? null,
+      'duration': duration ?? null,
     };
   }
 }

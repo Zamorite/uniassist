@@ -4,11 +4,13 @@ import 'package:uniassist/utils/constants.dart';
 class SettingTile extends StatelessWidget {
   final String title;
   final Widget trailing;
+  final Function onTap;
 
   const SettingTile({
     Key key,
     this.title,
     this.trailing,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -28,6 +30,7 @@ class SettingTile extends StatelessWidget {
       child: ListTile(
         title: Text(title),
         trailing: trailing,
+        onTap: onTap == null ? null : () => onTap(),
       ),
     );
   }

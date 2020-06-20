@@ -1,8 +1,9 @@
-import 'package:flashy_tab_bar/flashy_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:uniassist/screens/auth.screen.dart';
+import 'package:uniassist/screens/profile.screen.dart';
 import 'package:uniassist/screens/tasks.screen.dart';
+import 'package:uniassist/screens/timer.screen.dart';
 import 'package:uniassist/utils/constants.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
     [
       Feather.circle,
       'Timer',
-      AuthScreen(),
+      TimerScreen(),
     ],
     [
       Feather.list,
@@ -27,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     [
       Feather.user,
       'Account',
-      AuthScreen(),
+      ProfileScreen(),
     ],
   ];
 
