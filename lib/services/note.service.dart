@@ -31,11 +31,13 @@ class NoteService {
 
   //***** Get a list of a user's notes asynchronously from Firebase
   Stream<List<Note>> streamNotes(FirebaseUser user) {
-    var ref = _fs.document(user.uid).collection('notes');
+    var ref = _fs.collection('notes').where('ownerId', isEqualTo: user.uid);
     return ref.snapshots().map(
-          (list) => list.documents.map(
-            (snap) => Note.fromFirestore(snap),
-          ),
+          (list) => list.documents
+              .map(
+                (snap) => Note.fromFirestore(snap),
+              )
+              .toList(),
         );
   }
 

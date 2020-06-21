@@ -31,11 +31,13 @@ class SessionService {
 
   //***** Get a list of a user's sessions asynchronously from Firebase
   Stream<List<Session>> streamSessions(FirebaseUser user) {
-    var ref = _fs.document(user.uid).collection('sessions');
+    var ref = _fs.collection('sessions').where('ownerId', isEqualTo: user.uid);
     return ref.snapshots().map(
-          (list) => list.documents.map(
-            (snap) => Session.fromFirestore(snap),
-          ),
+          (list) => list.documents
+              .map(
+                (snap) => Session.fromFirestore(snap),
+              )
+              .toList(),
         );
   }
 

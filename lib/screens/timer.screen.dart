@@ -2,76 +2,151 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:uniassist/services/timer.service.dart';
 import 'package:uniassist/utils/constants.dart';
+import 'package:uniassist/widgets/default.scaffold.dart';
 
 class TimerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<FirebaseUser>(context);
+    TimerService timerService = Provider.of<TimerService>(context);
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
 
     return SafeArea(
-      child: Scaffold(
-        body: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              // color: Colors.blue,
-              padding: EdgeInsets.symmetric(
-                horizontal: kWidth(context) * .12,
-                vertical: kHeight(context) * .06,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    child: Align(
+        child: DefaultScaffold(
+      title: 'TIMER',
+      body: Stack(
+        children: [
+          Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                // color: Colors.blue,
+                padding: EdgeInsets.symmetric(
+                    // horizontal: kWidth(context) * .06,
+                    // vertical: kHeight(context) * .06,
+                    ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      child: Align(
+                        child: Text(
+                          'TASK',
+                          style: TextStyle(
+                            fontFamily: 'Teko',
+                            fontSize: 24,
+                            // height: .95,
+                          ),
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                    Container(
                       child: Text(
-                        'TASK',
+                        '${timerService.currentDuration.inMinutes.toString().padLeft(2, '0')}:${timerService.currentDuration.inSeconds.modPow(1, 60).toString().padLeft(2, '0')}',
                         style: TextStyle(
                           fontFamily: 'Teko',
-                          fontSize: 24,
+                          fontSize: 144,
+                          color: kOrange,
                           // height: .95,
                         ),
                       ),
-                      alignment: Alignment.centerRight,
                     ),
-                  ),
-                  Container(
-                    child: Text(
-                      '25:00',
+                    Text(
+                      'COMPLETED: 5',
                       style: TextStyle(
                         fontFamily: 'Teko',
-                        fontSize: 144,
-                        color: kOrange,
-                        // height: .95,
+                        fontSize: 30,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(vertical: kHeight(context) * .03),
+              //   child: Container(
+              //     color: kLightGray,
+              //     height: kHeight(context) * .30,
+              //   ),
+              // ),
+            ],
+          ),
+          timerService.isRunning
+              ? Align(
+                  alignment: Alignment.bottomLeft,
+                  child: GestureDetector(
+                    onTap: () => timerService.stop(context),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: kHeight(context) * .015,
+                        horizontal: kWidth(context) * .06,
+                      ),
+                      decoration: BoxDecoration(
+                        color: kDarkGray,
+                        borderRadius:
+                            BorderRadius.circular(kWidth(context) * .25),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Icon(Feather.square),
+                          ),
+                          Text('STOP'),
+                        ],
                       ),
                     ),
                   ),
-                  Text(
-                    'TODAY: 5/16',
-                    style: TextStyle(
-                      fontFamily: 'Teko',
-                      fontSize: 30,
+                )
+              : Offstage(),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () => timerService.isRunning
+                  ? timerService.pause()
+                  : timerService.play(
+                      // Duration(minutes: 25),
+                      Duration(seconds: 3),
+                      context,
                     ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: kHeight(context) * .03),
               child: Container(
-                color: kLightGray,
-                height: kHeight(context) * .30,
+                padding: EdgeInsets.symmetric(
+                  vertical: kHeight(context) * .015,
+                  horizontal: kWidth(context) * .06,
+                ),
+                decoration: BoxDecoration(
+                  color: timerService.isRunning ? kDarkGray : kOrange,
+                  borderRadius: BorderRadius.circular(kWidth(context) * .25),
+                ),
+                child: Container(
+                  // padding: EdgeInsets.only(right: 20),
+                  //   child: Icon(Feather.play),
+                  // ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(timerService.isRunning ? 'PAUSE' : 'PLAY'),
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Icon(
+                          timerService.isRunning ? Feather.pause : Feather.play,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Feather.play),
-          onPressed: () => print(user.uid),
-        ),
+          ),
+        ],
       ),
-    );
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Feather.play),
+      //   onPressed: () => print(user.uid),
+      // ),
+    ));
   }
 }

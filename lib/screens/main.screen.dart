@@ -26,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
       TasksScreen(),
     ],
     [
-      Feather.user,
-      'Account',
+      Feather.file_text,
+      'Notes',
       ProfileScreen(),
     ],
   ];

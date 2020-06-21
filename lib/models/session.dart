@@ -4,10 +4,11 @@ class Session {
   final String id;
   String taskId, ownerId;
   Duration duration;
+  // DateTime deadline;
 
   Session({
     this.id,
-    this.taskId,
+    // this.taskId,
     this.ownerId,
     this.duration,
   });
@@ -17,18 +18,18 @@ class Session {
 
     return Session(
       id: doc.documentID ?? '<null>',
-      taskId: data['taskId'] ?? '<null>',
+      // taskId: data['taskId'] ?? '<null>',
       ownerId: data['ownerId'] ?? '<null>',
-      duration: data['duration'] ?? '<null>',
+      duration: Duration(seconds: data['duration']) ?? '<null>',
     );
   }
 
   Map<String, dynamic> toJSON() {
     return {
       'id': this.id ?? null,
-      'taskId': taskId ?? null,
+      // 'taskId': taskId ?? null,
       'ownerId': ownerId ?? null,
-      'duration': duration ?? null,
+      'duration': duration.inSeconds ?? null,
     };
   }
 }

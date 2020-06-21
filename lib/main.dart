@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uniassist/screens/auth.screen.dart';
 import 'package:uniassist/screens/main.screen.dart';
 import 'package:uniassist/screens/tasks.screen.dart';
+import 'package:uniassist/services/timer.service.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
 import 'package:uniassist/utils/theme.dart';
@@ -28,6 +29,12 @@ class UniAssist extends StatelessWidget {
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) => ThemeChanger(
             kDarkTheme,
+          ),
+        ),
+        ChangeNotifierProvider<TimerService>(
+          create: (_) => TimerService(
+            Duration(seconds: 3),
+            // Duration(minutes: 25),
           ),
         ),
       ],

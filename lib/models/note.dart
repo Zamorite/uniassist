@@ -21,7 +21,7 @@ class Note {
       content: data['content'] ?? '<null>',
       ownerId: data['ownerId'] ?? '<null>',
       type: data['type'] ?? '<null>',
-      period: data['period'] ?? '<null>',
+      period: (data['period']).toDate() ?? '<null>',
     );
   }
 
