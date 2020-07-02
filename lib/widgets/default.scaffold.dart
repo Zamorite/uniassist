@@ -36,7 +36,7 @@ class DefaultScaffold extends StatelessWidget {
               // border: Border(bottom: BorderSide(color: kLightGray))),
               padding: EdgeInsets.symmetric(
                 horizontal: kWidth(context) * .06,
-                vertical: kHeight(context) * .03,
+                // vertical: kHeight(context) * .03,
               ),
 
               child: Row(

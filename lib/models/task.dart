@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Task {
   final String id;
   String content, ownerId, type, status;
+  bool done;
   DateTime deadline;
 
   Task({
@@ -11,7 +12,7 @@ class Task {
     this.ownerId,
     this.type,
     this.deadline,
-    // this.status,
+    this.done,
   });
 
   factory Task.fromFirestore(DocumentSnapshot doc) {
@@ -23,7 +24,7 @@ class Task {
       ownerId: data['ownerId'] ?? '<null>',
       type: data['type'] ?? '<null>',
       deadline: (data['deadline']).toDate() ?? '<null>',
-      // status: data['status'] ?? '<null>',
+      done: data['done'] ?? false,
     );
   }
 
@@ -34,7 +35,7 @@ class Task {
       'ownerId': this.ownerId ?? null,
       'type': this.type ?? null,
       'deadline': this.deadline ?? null,
-      // status: this.status ?? null,
+      'done': this.done ?? false,
     };
   }
 }

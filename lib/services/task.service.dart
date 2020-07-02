@@ -29,6 +29,38 @@ class TaskService {
         .map((snap) => Task.fromFirestore(snap));
   }
 
+  //***** Get a list of a user's undone tasks asynchronously from Firebase
+  Stream<List<Task>> streamTodoTasks(FirebaseUser user) {
+    print('User UID: ${user.uid}');
+    var ref = _fs
+        .collection('tasks')
+        .where('ownerId', isEqualTo: user.uid)
+        .where('done', isEqualTo: false);
+    return ref.snapshots().map(
+          (list) => list.documents
+              .map(
+                (snap) => Task.fromFirestore(snap),
+              )
+              .toList(),
+        );
+  }
+
+  //***** Get a list of a user's completed tasks asynchronously from Firebase
+  Stream<List<Task>> streamDoneTasks(FirebaseUser user) {
+    print('User UID: ${user.uid}');
+    var ref = _fs
+        .collection('tasks')
+        .where('ownerId', isEqualTo: user.uid)
+        .where('done', isEqualTo: true);
+    return ref.snapshots().map(
+          (list) => list.documents
+              .map(
+                (snap) => Task.fromFirestore(snap),
+              )
+              .toList(),
+        );
+  }
+
   //***** Get a list of a user's tasks asynchronously from Firebase
   Stream<List<Task>> streamTasks(FirebaseUser user) {
     print('User UID: ${user.uid}');
@@ -67,7 +99,33 @@ class TaskService {
     return Info(success: true, message: 'Task Updated Successfully !');
   }
 
-  Future<Info> deleteEvent(Task task) async {
+  Future<Info> doTask(Task task) async {
+    try {
+      task.done = true;
+      await _fs.collection('tasks').document(task.id).setData(
+            task.toJSON(),
+            merge: true,
+          );
+    } catch (error) {
+      return Info(success: false, message: 'Error: ${error.toString()}');
+    }
+    return Info(success: true, message: 'Task Updated Successfully !');
+  }
+
+  Future<Info> undoTask(Task task) async {
+    try {
+      task.done = false;
+      await _fs.collection('tasks').document(task.id).setData(
+            task.toJSON(),
+            merge: true,
+          );
+    } catch (error) {
+      return Info(success: false, message: 'Error: ${error.toString()}');
+    }
+    return Info(success: true, message: 'Task Updated Successfully !');
+  }
+
+  Future<Info> deleteTask(Task task) async {
     try {
       await _fs.collection('tasks').document(task.id).delete();
     } catch (error) {

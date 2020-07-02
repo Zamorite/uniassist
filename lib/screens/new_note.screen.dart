@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,82 +6,85 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:quill_delta/quill_delta.dart';
 import 'package:random_string/random_string.dart';
 import 'package:uniassist/models/Info.dart';
+import 'package:uniassist/models/note.dart';
 import 'package:uniassist/models/task.dart';
 import 'package:uniassist/screens/date_picker.screen.dart';
+import 'package:uniassist/screens/note.editor.dart';
 import 'package:uniassist/services/auth.service.dart';
+import 'package:uniassist/services/note.service.dart';
 import 'package:uniassist/services/task.service.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
 import 'package:uniassist/widgets/default.scaffold.dart';
 import 'package:uniassist/widgets/toggle.button.dart';
 
-class NewTaskScreen extends StatefulWidget {
-  final Task task;
+class NewNoteScreen extends StatefulWidget {
+  final Note note;
 
-  const NewTaskScreen({
+  const NewNoteScreen({
     Key key,
-    this.task,
+    this.note,
   }) : super(key: key);
 
   @override
-  _NewTaskScreenState createState() => _NewTaskScreenState();
+  _NewNoteScreenState createState() => _NewNoteScreenState();
 }
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
+class _NewNoteScreenState extends State<NewNoteScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  TaskService _taskService = locator.get<TaskService>();
+  NoteService _noteService = locator.get<NoteService>();
 
-  Task task;
+  Note note;
 
-  resetTask() {
-    setState(
-      () {
-        task = widget.task == null
-            ? Task(
-                content: '',
-                id: randomAlphaNumeric(28),
-                ownerId: '',
-                type: kTaskTypes[0],
-                deadline: DateTime.now(),
-                done: false,
-              )
-            : widget.task;
-      },
-    );
+  resetNote() {
+    setState(() {
+      note = widget.note == null
+          ? Note(
+              title: '',
+              content: '',
+              id: randomAlphaNumeric(28),
+              ownerId: '',
+              type: kTaskTypes[0],
+              period: DateTime.now(),
+              // status: '',
+            )
+          : widget.note;
+    });
   }
 
   // setType(String type) {
   //   type
   // }
 
-  setDeadline(DateTime deadline) {
+  setPeriod(DateTime period) {
     setState(() {
-      task.deadline = deadline ?? task.deadline;
+      note.period = period ?? note.period;
     });
-    print('Set State: $deadline');
+    print('Set State: $period');
   }
 
   List<Widget> buildTypes() {
     List<Widget> widgets = [];
 
-    for (var type in kTaskTypes) {
-      widgets.add(
-        Expanded(
-          child: ToggleButton(
-            title: type,
-            selected: task.type == type,
-            toggle: () => setState(
-              () {
-                task.type = type;
-              },
-            ),
-          ),
-        ),
-      );
-    }
+    // for (var type in kTaskTypes) {
+    //   widgets.add(
+    //     Expanded(
+    //       child: ToggleButton(
+    //         title: type,
+    //         selected: note.type == type,
+    //         toggle: () => setState(
+    //           () {
+    //             task.type = type;
+    //           },
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     return widgets;
   }
@@ -88,7 +92,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   void initState() {
     super.initState();
-    resetTask();
+    resetNote();
   }
 
   @override
@@ -98,7 +102,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     return Scaffold(
       body: Builder(
         builder: (BuildContext context) => DefaultScaffold(
-          title: '${widget.task == null ? 'ADD' : 'EDIT'} TASK',
+          title: '${widget.note == null ? 'ADD' : 'EDIT'} NOTE',
           action: () => null,
           body: Form(
             key: _formKey,
@@ -109,11 +113,17 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     vertical: kHeight(context) * .03,
                   ),
                   child: TextFormField(
-                    initialValue: task.content,
-                    onChanged: (text) => task.content = text,
+                    initialValue: note.title,
+                    onChanged: (text) {
+                      note.title = text;
+
+                      Delta delta = Delta()..insert('$text\n');
+
+                      note.content = json.encode(delta);
+                    },
                     validator: (String text) {
                       if ([null, ''].contains(text.trim())) {
-                        return 'Your task should have a title. 😉';
+                        return 'Your note should have a title. 😉';
                       } else {
                         return null;
                       }
@@ -122,7 +132,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(width: 100),
                       ),
-                      labelText: 'Task Name',
+                      labelText: 'Note Title',
                     ),
                   ),
                 ),
@@ -148,10 +158,40 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                             vertical: kHeight(context) * .03,
                             // horizontal: kWidth(context) * .06,
                           ),
-                          child: Text('Task Type'),
+                          child: Text('Note Content'),
                         ),
-                        Row(
-                          children: buildTypes(),
+                        GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState.validate()) {
+                              Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (context) => NoteEditor(
+                                        content: note.content,
+                                      ),
+                                    ),
+                                  )
+                                  .then((content) => note.content = content);
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: kHeight(context) * .02,
+                              horizontal: kWidth(context) * .06,
+                            ),
+                            decoration: BoxDecoration(
+                              color: kDarkGray,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Text('Edit Note Content'),
+                                ),
+                                Icon(Feather.feather),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -170,12 +210,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                             .push(
                               MaterialPageRoute(
                                 builder: (context) => DatePickerScreen(
-                                  initialDate: task.deadline,
+                                  initialDate: note.period,
                                 ),
                               ),
                             )
                             .then(
-                              (deadline) => setDeadline(deadline),
+                              (period) => setPeriod(period),
                             ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -195,7 +235,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                 child: Icon(Feather.calendar),
                               ),
                               Text(
-                                  '${task.deadline.day}.${task.deadline.month}.${task.deadline.year}'),
+                                  '${note.period.day}.${note.period.month}.${note.period.year}'),
                             ],
                           ),
                         ),
@@ -218,15 +258,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             // ),
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                if (widget.task == null) {
+                if (widget.note == null) {
                   Flushbar(
                     margin: EdgeInsets.symmetric(
                         vertical: kHeight(context) * .03,
                         horizontal: kWidth(context) * .03),
                     borderRadius: 10,
-                    message: 'Your new task is on it\'s way to the DB',
+                    message: 'Your new note is on it\'s way to the DB',
                     flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Adding Task',
+                    title: 'Adding Note',
                     duration: Duration(seconds: 3),
                     icon: Icon(
                       Feather.check,
@@ -235,19 +275,22 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     shouldIconPulse: true,
                   )..show(context);
 
-                  task.ownerId = user.uid;
-                  Info info = await _taskService.addTask(task);
+                  note.ownerId = user.uid;
+                  Info info = widget.note == null
+                      ? await _noteService.addNote(note)
+                      : await _noteService.updateNote(note);
 
                   if (info.success) {
                     _formKey.currentState.reset();
+                    resetNote();
                     Flushbar(
                       margin: EdgeInsets.symmetric(
                           vertical: kHeight(context) * .03,
                           horizontal: kWidth(context) * .03),
                       borderRadius: 10,
-                      message: 'Your new task is already in the DB',
+                      message: 'Your new note is already in the DB',
                       flushbarStyle: FlushbarStyle.FLOATING,
-                      title: 'Task Added',
+                      title: 'Note Saved',
                       duration: Duration(seconds: 3),
                       icon: Icon(
                         Feather.check,
@@ -261,7 +304,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                           vertical: kHeight(context) * .03,
                           horizontal: kWidth(context) * .03),
                       borderRadius: 10,
-                      message: 'Your task could not be added',
+                      message: 'Your note could not be saved',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
                       duration: Duration(seconds: 3),
@@ -278,9 +321,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         vertical: kHeight(context) * .03,
                         horizontal: kWidth(context) * .03),
                     borderRadius: 10,
-                    message: 'Your task is being updated',
+                    message: 'Your note is being updated',
                     flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Updating Task',
+                    title: 'Updating Note',
                     duration: Duration(seconds: 3),
                     icon: Icon(
                       Feather.check,
@@ -289,19 +332,22 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     shouldIconPulse: true,
                   )..show(context);
 
-                  task.ownerId = user.uid;
-                  Info info = await _taskService.addTask(task);
+                  note.ownerId = user.uid;
+                  Info info = widget.note == null
+                      ? await _noteService.addNote(note)
+                      : await _noteService.updateNote(note);
 
                   if (info.success) {
                     _formKey.currentState.reset();
+                    resetNote();
                     Flushbar(
                       margin: EdgeInsets.symmetric(
                           vertical: kHeight(context) * .03,
                           horizontal: kWidth(context) * .03),
                       borderRadius: 10,
-                      message: 'Your task has been updated',
+                      message: 'Your note has been updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
-                      title: 'Task Updated',
+                      title: 'Note Updated',
                       duration: Duration(seconds: 3),
                       icon: Icon(
                         Feather.check,
@@ -315,7 +361,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                           vertical: kHeight(context) * .03,
                           horizontal: kWidth(context) * .03),
                       borderRadius: 10,
-                      message: 'Your task could not be updated',
+                      message: 'Your note could not be updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
                       duration: Duration(seconds: 3),

@@ -35,7 +35,7 @@ class _TodayTasksState extends State<TodayTasks> {
   Widget build(BuildContext context) {
     List<Task> tasks = Provider.of<List<Task>>(context);
 
-    return tasks == null
+    return tasks == null || tasks.length == 0
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -47,10 +47,10 @@ class _TodayTasksState extends State<TodayTasks> {
                 ),
               ),
               Text(
-                'NO TASKS\nFOR TODAY',
+                'NO TASKS\nTO DO FOR NOW',
                 style: kH1.copyWith(
                   fontSize: 36,
-                  height: .75,
+                  height: .85,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -59,8 +59,9 @@ class _TodayTasksState extends State<TodayTasks> {
         : ListView.builder(
             physics: BouncingScrollPhysics(),
             itemCount: tasks.length,
-            itemBuilder: (BuildContext context, int index) =>
-                TaskListTile(task: tasks[index]),
+            itemBuilder: (BuildContext context, int index) => TaskListTile(
+              task: tasks[index],
+            ),
           );
   }
 }

@@ -5,16 +5,16 @@ import 'package:uniassist/models/task.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/widgets/tasklist.tile.dart';
 
-class AllTasks extends StatefulWidget {
-  const AllTasks({
+class DoneTasks extends StatefulWidget {
+  const DoneTasks({
     Key key,
   }) : super(key: key);
 
   @override
-  _AllTasksState createState() => _AllTasksState();
+  _DoneTasksState createState() => _DoneTasksState();
 }
 
-class _AllTasksState extends State<AllTasks> {
+class _DoneTasksState extends State<DoneTasks> {
   buildTiles(List<Task> tasks) {
     List<Widget> tiles = [];
 
@@ -33,7 +33,7 @@ class _AllTasksState extends State<AllTasks> {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = Provider.of<List<Task>>(context);
+    List<Task> tasks; //Provider.of<List<Task>>(context);
 
     return tasks == null || tasks.length == 0
         ? Column(
@@ -47,10 +47,10 @@ class _AllTasksState extends State<AllTasks> {
                 ),
               ),
               Text(
-                'NO COMPLETED\nTASKS YET',
+                'NO TASKS\nCOMPLETED YET',
                 style: kH1.copyWith(
                   fontSize: 36,
-                  height: .85,
+                  height: .75,
                 ),
                 textAlign: TextAlign.center,
               ),

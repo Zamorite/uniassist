@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Note {
   final String id;
-  String content, ownerId, type;
+  String title, content, ownerId, type;
   DateTime period;
 
   Note({
     this.id,
+    this.title,
     this.content,
     this.ownerId,
     this.type,
@@ -18,6 +19,7 @@ class Note {
 
     return Note(
       id: doc.documentID ?? '<null>',
+      title: data['title'] ?? '<null>',
       content: data['content'] ?? '<null>',
       ownerId: data['ownerId'] ?? '<null>',
       type: data['type'] ?? '<null>',
@@ -28,6 +30,7 @@ class Note {
   Map<String, dynamic> toJSON() {
     return {
       'id': this.id ?? null,
+      'title': this.title ?? null,
       'content': this.content ?? null,
       'ownerId': this.ownerId ?? null,
       'type': this.type ?? null,

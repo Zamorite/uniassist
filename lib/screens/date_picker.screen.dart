@@ -20,7 +20,7 @@ class DatePickerScreen extends StatelessWidget {
           CalendarDatePicker(
             // initialCalendarMode: DatePickerMode.day,
             initialDate: initialDate,
-            firstDate: DateTime.now(),
+            firstDate: initialDate,
             lastDate: DateTime.now().add(
               Duration(
                 days: 90,

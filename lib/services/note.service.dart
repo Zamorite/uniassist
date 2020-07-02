@@ -66,7 +66,7 @@ class NoteService {
     return Info(success: true, message: 'Note Updated Successfully !');
   }
 
-  Future<Info> deleteEvent(Note note) async {
+  Future<Info> deleteNote(Note note) async {
     try {
       await _fs.collection('notes').document(note.id).delete();
     } catch (error) {

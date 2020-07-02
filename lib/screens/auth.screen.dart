@@ -51,13 +51,8 @@ class AuthScreen extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: MaterialButton(
-                  padding: EdgeInsets.symmetric(
-                    vertical: kHeight(context) * .03,
-                    horizontal: kWidth(context) * .06,
-                  ),
-                  color: kDarkGray,
-                  onPressed: () {
+                child: GestureDetector(
+                  onTap: () {
                     Flushbar(
                       margin: EdgeInsets.symmetric(
                           vertical: kHeight(context) * .03,
@@ -88,20 +83,52 @@ class AuthScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Icon(Fontisto.google),
-                      Text(
-                        'Continue with Google',
-                        style: TextStyle(
-                          fontSize: 18,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: kHeight(context) * .015,
+                      horizontal: kWidth(context) * .06,
+                    ),
+                    decoration: BoxDecoration(
+                      color: kDarkGray,
+                      borderRadius:
+                          BorderRadius.circular(kWidth(context) * .25),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(Fontisto.google),
                         ),
-                      ),
-                    ],
+                        Text('Continue with Google'),
+                      ],
+                    ),
                   ),
                 ),
               ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: MaterialButton(
+              //     padding: EdgeInsets.symmetric(
+              //       vertical: kHeight(context) * .03,
+              //       horizontal: kWidth(context) * .06,
+              //     ),
+              //     color: kDarkGray,
+              //     onPressed:
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //       children: <Widget>[
+              //         Icon(Fontisto.google),
+              //         Text(
+              //           'Continue with Google',
+              //           style: TextStyle(
+              //             fontSize: 18,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

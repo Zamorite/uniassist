@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:uniassist/models/note.dart';
 import 'package:uniassist/models/task.dart';
 import 'package:uniassist/utils/constants.dart';
+import 'package:uniassist/widgets/notelist.tile.dart';
 import 'package:uniassist/widgets/tasklist.tile.dart';
 
-class AllTasks extends StatefulWidget {
-  const AllTasks({
+class NoteList extends StatefulWidget {
+  const NoteList({
     Key key,
   }) : super(key: key);
 
   @override
-  _AllTasksState createState() => _AllTasksState();
+  _NoteListState createState() => _NoteListState();
 }
 
-class _AllTasksState extends State<AllTasks> {
-  buildTiles(List<Task> tasks) {
+class _NoteListState extends State<NoteList> {
+  buildTiles(List<Note> notes) {
     List<Widget> tiles = [];
 
-    if (tasks != null) {
-      for (var task in tasks) {
+    if (notes != null) {
+      for (var note in notes) {
         tiles.add(
-          TaskListTile(
-            task: task,
+          NoteListTile(
+            note: note,
           ),
         );
       }
@@ -33,21 +35,23 @@ class _AllTasksState extends State<AllTasks> {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = Provider.of<List<Task>>(context);
+    List<Note> notes = Provider.of<List<Note>>(context);
 
-    return tasks == null || tasks.length == 0
+    return notes == null || notes.length == 0
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(vertical: kHeight(context) * .03),
+                padding: EdgeInsets.symmetric(
+                  vertical: kHeight(context) * .03,
+                ),
                 child: Icon(
                   Feather.circle,
                   size: 72,
                 ),
               ),
               Text(
-                'NO COMPLETED\nTASKS YET',
+                'YOU HAVE\nNO NOTES YET',
                 style: kH1.copyWith(
                   fontSize: 36,
                   height: .85,
@@ -56,13 +60,13 @@ class _AllTasksState extends State<AllTasks> {
               ),
             ],
           )
-        : ListView(
+        // : Center(child: Text(notes.length.toString()));
+        : ListView.builder(
             physics: BouncingScrollPhysics(),
-            children: <Widget>[
-              ListBody(
-                children: buildTiles(tasks),
-              ),
-            ],
+            itemCount: notes.length,
+            itemBuilder: (BuildContext context, int index) => NoteListTile(
+              note: notes[index],
+            ),
           );
   }
 }
