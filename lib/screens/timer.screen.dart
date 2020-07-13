@@ -118,8 +118,8 @@ class TimerScreen extends StatelessWidget {
                     : timerService.play(
                         // Duration(minutes: 25),
                         // TODO:You don't wanna waste 25 minutes during demo
-                        Duration(minutes: 25),
-                        // Duration(seconds: 3),
+                        // Duration(minutes: 25),
+                        Duration(seconds: 3),
                         context,
                       ),
                 child: Container(

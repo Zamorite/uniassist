@@ -34,9 +34,8 @@ class UniAssist extends StatelessWidget {
         ChangeNotifierProvider<TimerService>(
           create: (_) => TimerService(
             // TODO:You don't wanna waste 25 minutes during demo
-            Duration(minutes: 25),
-            // Duration(seconds: 3),
             // Duration(minutes: 25),
+            Duration(seconds: 3),
           ),
         ),
       ],
