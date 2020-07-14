@@ -4,6 +4,7 @@ import 'package:uniassist/services/auth.service.dart';
 import 'package:uniassist/services/event.service.dart';
 import 'package:uniassist/services/moment.service.dart';
 import 'package:uniassist/services/note.service.dart';
+import 'package:uniassist/services/notification.service.dart';
 import 'package:uniassist/services/session.service.dart';
 import 'package:uniassist/services/settings.service.dart';
 import 'package:uniassist/services/task.service.dart';
@@ -20,4 +21,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
   locator.registerLazySingleton(() => SettingsService());
   locator.registerLazySingleton(() => MomentService());
+  locator.registerLazySingleton(() => NotificationService());
 }

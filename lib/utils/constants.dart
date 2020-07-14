@@ -11,6 +11,17 @@ ThemeData kDarkTheme = ThemeData(
   primaryColor: Color(0xFF242424),
   accentColor: Color(0xFFFF5500),
   cardColor: Color(0xFF242424),
+  cursorColor: kLightGray,
+  textSelectionHandleColor: kOrange,
+
+  colorScheme: ColorScheme.dark(
+    primary: kOrange,
+    onPrimary: Colors.white,
+    surface: kDarkGray,
+    onSurface: kLightGray,
+    secondary: kOrange,
+    onSecondary: Colors.white,
+  ),
 
   // Define the default font family.
   fontFamily: 'Roboto',
@@ -29,6 +40,13 @@ ThemeData kLightTheme = ThemeData(
   primaryColor: Color(0xFF242424),
   accentColor: Color(0xFFFF5500),
   cardColor: Color(0xFF242424),
+
+  colorScheme: ColorScheme.dark(
+    primary: Colors.deepPurple,
+    onPrimary: Colors.white,
+    surface: Colors.pink,
+    onSurface: Colors.yellow,
+  ),
   // cal
 
   // Define the default font family.

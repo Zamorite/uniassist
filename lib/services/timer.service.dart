@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
 import 'package:uniassist/models/Info.dart';
 import 'package:uniassist/models/session.dart';
+import 'package:uniassist/services/notification.service.dart';
 import 'package:uniassist/services/session.service.dart';
 import 'package:uniassist/utils/constants.dart';
 import 'package:uniassist/utils/service.locator.dart';
@@ -20,6 +21,7 @@ class TimerService with ChangeNotifier {
   Timer _timer;
 
   SessionService sessionService = locator.get<SessionService>();
+  NotificationService _notifService = locator.get<NotificationService>();
 
   get currentDuration => _currentDuration;
   get isRunning => _timer != null;
@@ -51,6 +53,8 @@ class TimerService with ChangeNotifier {
             volume: 1, // Android only - API >= 28
             asAlarm: false, // Android only - all APIs
           );
+
+          // _notifService.displayNotif();
         }
         notifyListeners();
       },

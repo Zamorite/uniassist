@@ -36,6 +36,7 @@ class UniAssist extends StatelessWidget {
             // TODO:You don't wanna waste 25 minutes during demo
             // Duration(minutes: 25),
             Duration(seconds: 3),
+            // Duration(minutes: 25),
           ),
         ),
       ],
