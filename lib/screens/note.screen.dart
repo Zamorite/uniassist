@@ -13,9 +13,9 @@ import 'package:uniassist/widgets/default.scaffold.dart';
 import 'package:zefyr/zefyr.dart';
 
 class NoteScreen extends StatefulWidget {
-  final Note note;
+  Note note;
 
-  const NoteScreen({
+  NoteScreen({
     Key key,
     this.note,
   }) : super(key: key);
@@ -35,12 +35,18 @@ class _NoteScreenState extends State<NoteScreen> {
 
     // currentContent = widget.content;
 
+    stageNote();
+  }
+
+  stageNote() async {
     _focusNode = FocusNode();
-    _loadDocument().then((document) {
-      setState(() {
-        _controller = ZefyrController(document);
-      });
-    });
+    await _loadDocument().then(
+      (document) {
+        setState(() {
+          _controller = ZefyrController(document);
+        });
+      },
+    );
   }
 
   Future<NotusDocument> _loadDocument() async {
@@ -110,13 +116,21 @@ class _NoteScreenState extends State<NoteScreen> {
         }
       },
       fab: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
+        onPressed: () => Navigator.of(context)
+            .push(
           MaterialPageRoute(
             builder: (context) => NewNoteScreen(
               note: widget.note,
             ),
           ),
-        ),
+        )
+            .then((note) {
+          // note==null ? return null :
+          if (note != null) {
+            widget.note = note;
+            stageNote();
+          }
+        }),
         child: Icon(
           Feather.feather,
         ),

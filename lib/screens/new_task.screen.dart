@@ -219,21 +219,21 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 if (widget.task == null) {
-                  Flushbar(
-                    margin: EdgeInsets.symmetric(
-                        vertical: kHeight(context) * .03,
-                        horizontal: kWidth(context) * .03),
-                    borderRadius: 10,
-                    message: 'Your new task is on it\'s way to the DB',
-                    flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Adding Task',
-                    duration: Duration(seconds: 3),
-                    icon: Icon(
-                      Feather.check,
-                      color: kOrange,
-                    ),
-                    shouldIconPulse: true,
-                  )..show(context);
+                  // Flushbar(
+                  //   margin: EdgeInsets.symmetric(
+                  //       vertical: kHeight(context) * .03,
+                  //       horizontal: kWidth(context) * .03),
+                  //   borderRadius: 10,
+                  //   message: 'Your new task is on it\'s way to the DB',
+                  //   flushbarStyle: FlushbarStyle.FLOATING,
+                  //   title: 'Adding Task',
+                  //   duration: Duration(seconds: 3),
+                  //   icon: Icon(
+                  //     Feather.check,
+                  //     color: kOrange,
+                  //   ),
+                  //   shouldIconPulse: true,
+                  // )..show(context);
 
                   task.ownerId = user.uid;
                   Info info = await _taskService.addTask(task);
@@ -248,13 +248,13 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       message: 'Your new task is already in the DB',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: 'Task Added',
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.check,
                         color: kOrange,
                       ),
                       shouldIconPulse: true,
-                    )..show(context);
+                    )..show(context).then((value) => Navigator.pop(context));
                   } else {
                     Flushbar(
                       margin: EdgeInsets.symmetric(
@@ -264,7 +264,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       message: 'Your task could not be added',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.x,
                         color: kOrange,
@@ -273,21 +273,21 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     )..show(context);
                   }
                 } else {
-                  Flushbar(
-                    margin: EdgeInsets.symmetric(
-                        vertical: kHeight(context) * .03,
-                        horizontal: kWidth(context) * .03),
-                    borderRadius: 10,
-                    message: 'Your task is being updated',
-                    flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Updating Task',
-                    duration: Duration(seconds: 3),
-                    icon: Icon(
-                      Feather.check,
-                      color: kOrange,
-                    ),
-                    shouldIconPulse: true,
-                  )..show(context);
+                  // Flushbar(
+                  //   margin: EdgeInsets.symmetric(
+                  //       vertical: kHeight(context) * .03,
+                  //       horizontal: kWidth(context) * .03),
+                  //   borderRadius: 10,
+                  //   message: 'Your task is being updated',
+                  //   flushbarStyle: FlushbarStyle.FLOATING,
+                  //   title: 'Updating Task',
+                  //   duration: Duration(seconds: 3),
+                  //   icon: Icon(
+                  //     Feather.check,
+                  //     color: kOrange,
+                  //   ),
+                  //   shouldIconPulse: true,
+                  // )..show(context);
 
                   task.ownerId = user.uid;
                   Info info = await _taskService.addTask(task);
@@ -302,13 +302,13 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       message: 'Your task has been updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: 'Task Updated',
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.check,
                         color: kOrange,
                       ),
                       shouldIconPulse: true,
-                    )..show(context);
+                    )..show(context).then((value) => Navigator.pop(context));
                   } else {
                     Flushbar(
                       margin: EdgeInsets.symmetric(
@@ -318,7 +318,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       message: 'Your task could not be updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.x,
                         color: kOrange,

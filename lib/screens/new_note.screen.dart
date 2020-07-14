@@ -259,21 +259,21 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 if (widget.note == null) {
-                  Flushbar(
-                    margin: EdgeInsets.symmetric(
-                        vertical: kHeight(context) * .03,
-                        horizontal: kWidth(context) * .03),
-                    borderRadius: 10,
-                    message: 'Your new note is on it\'s way to the DB',
-                    flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Adding Note',
-                    duration: Duration(seconds: 3),
-                    icon: Icon(
-                      Feather.check,
-                      color: kOrange,
-                    ),
-                    shouldIconPulse: true,
-                  )..show(context);
+                  // Flushbar(
+                  //   margin: EdgeInsets.symmetric(
+                  //       vertical: kHeight(context) * .03,
+                  //       horizontal: kWidth(context) * .03),
+                  //   borderRadius: 10,
+                  //   message: 'Your new note is on it\'s way to the DB',
+                  //   flushbarStyle: FlushbarStyle.FLOATING,
+                  //   title: 'Adding Note',
+                  //   duration: Duration(seconds: 3),
+                  //   icon: Icon(
+                  //     Feather.check,
+                  //     color: kOrange,
+                  //   ),
+                  //   shouldIconPulse: true,
+                  // )..show(context);
 
                   note.ownerId = user.uid;
                   Info info = widget.note == null
@@ -291,13 +291,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       message: 'Your new note is already in the DB',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: 'Note Saved',
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.check,
                         color: kOrange,
                       ),
                       shouldIconPulse: true,
-                    )..show(context);
+                    )..show(context).then((value) => Navigator.pop(context));
                   } else {
                     Flushbar(
                       margin: EdgeInsets.symmetric(
@@ -307,7 +307,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       message: 'Your note could not be saved',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.x,
                         color: kOrange,
@@ -316,21 +316,21 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                     )..show(context);
                   }
                 } else {
-                  Flushbar(
-                    margin: EdgeInsets.symmetric(
-                        vertical: kHeight(context) * .03,
-                        horizontal: kWidth(context) * .03),
-                    borderRadius: 10,
-                    message: 'Your note is being updated',
-                    flushbarStyle: FlushbarStyle.FLOATING,
-                    title: 'Updating Note',
-                    duration: Duration(seconds: 3),
-                    icon: Icon(
-                      Feather.check,
-                      color: kOrange,
-                    ),
-                    shouldIconPulse: true,
-                  )..show(context);
+                  // Flushbar(
+                  //   margin: EdgeInsets.symmetric(
+                  //       vertical: kHeight(context) * .03,
+                  //       horizontal: kWidth(context) * .03),
+                  //   borderRadius: 10,
+                  //   message: 'Your note is being updated',
+                  //   flushbarStyle: FlushbarStyle.FLOATING,
+                  //   title: 'Updating Note',
+                  //   duration: Duration(seconds: 3),
+                  //   icon: Icon(
+                  //     Feather.check,
+                  //     color: kOrange,
+                  //   ),
+                  //   shouldIconPulse: true,
+                  // )..show(context);
 
                   note.ownerId = user.uid;
                   Info info = widget.note == null
@@ -348,13 +348,14 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       message: 'Your note has been updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: 'Note Updated',
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.check,
                         color: kOrange,
                       ),
                       shouldIconPulse: true,
-                    )..show(context);
+                    )..show(context)
+                        .then((value) => Navigator.pop(context, note));
                   } else {
                     Flushbar(
                       margin: EdgeInsets.symmetric(
@@ -364,7 +365,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       message: 'Your note could not be updated',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: info.message,
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 1),
                       icon: Icon(
                         Feather.x,
                         color: kOrange,

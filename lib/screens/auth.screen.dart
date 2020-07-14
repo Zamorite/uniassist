@@ -61,7 +61,7 @@ class AuthScreen extends StatelessWidget {
                       message: 'Setting your account up 😉',
                       flushbarStyle: FlushbarStyle.FLOATING,
                       title: 'Connecting to Google',
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 5),
                       icon: Icon(
                         // Feather.co
                         Entypo.power_plug,

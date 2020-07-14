@@ -6,6 +6,7 @@ class DefaultScaffold extends StatelessWidget {
   final String title;
   final Function action;
   final bool hPadding;
+  final bool vPadding;
   final Icon icon;
   final FloatingActionButton fab;
 
@@ -17,6 +18,7 @@ class DefaultScaffold extends StatelessWidget {
     this.icon,
     this.fab,
     this.hPadding = true,
+    this.vPadding = true,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,7 @@ class DefaultScaffold extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    title,
+                    title.length > 16 ? title.substring(0, 16) + '...' : title,
                     style: kH1,
                   ),
                   GestureDetector(
@@ -64,10 +66,10 @@ class DefaultScaffold extends StatelessWidget {
                 padding: hPadding
                     ? EdgeInsets.symmetric(
                         horizontal: kWidth(context) * .06,
-                        vertical: kHeight(context) * .03,
+                        vertical: vPadding ? kHeight(context) * .03 : 0,
                       )
                     : EdgeInsets.symmetric(
-                        vertical: kHeight(context) * .03,
+                        vertical: vPadding ? kHeight(context) * .03 : 0,
                       ),
                 child: body,
               ),

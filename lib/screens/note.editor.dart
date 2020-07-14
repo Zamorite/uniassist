@@ -62,6 +62,7 @@ class _NoteEditorState extends State<NoteEditor> {
   Widget build(BuildContext context) {
     return DefaultScaffold(
       title: 'NOTE CONTENT',
+      hPadding: false,
       body: _controller == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -71,6 +72,7 @@ class _NoteEditorState extends State<NoteEditor> {
                 padding: EdgeInsets.all(16),
                 controller: _controller,
                 focusNode: _focusNode,
+                physics: BouncingScrollPhysics(),
               ),
             ),
       icon: Icon(Feather.save),
