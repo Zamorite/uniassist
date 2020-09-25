@@ -2,4 +2,8 @@
 
 [![android](https://forthebadge.com/images/badges/built-for-android.svg)](https://www.android.com/) [![zamorite](https://forthebadge.com/images/badges/built-with-love.svg)](https://zamorite.com)
 
-An assistant for school students.
+An application that allows users (ideally students) to focus and manage their tasks and notes quite efficiently. It integrated a timer for the focus part. UX design was greatly inspired by [Andrey Zhulidin's work](https://www.behance.net/gallery/63802297/Work-Hard-App)
+
+# Demo
+
+<img src="https://github.com/Zamorite/uniassist/raw/dev/demo/uniassist.gif" width="250px">
