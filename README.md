@@ -6,6 +6,4 @@ An application that allows users (ideally students) to focus and manage their ta
 
 # Demo
 
-<!-- <img src="https://github.com/Zamorite/uniassist/raw/master/demo/uniassist.gif" width="250px"> -->
-
 ![android](https://github.com/Zamorite/uniassist/raw/master/demo/uniassist.gif)
